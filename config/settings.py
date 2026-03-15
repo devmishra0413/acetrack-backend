@@ -112,9 +112,7 @@ SIMPLE_JWT = {
 
 
 # ─── CORS ────────────────────────────────────────────────────────────────────
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",   # React Vite default port
-]
+CORS_ALLOWED_ORIGINS = True
 
 
 
