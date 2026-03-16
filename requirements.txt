@@ -7,6 +7,7 @@ PyMySQL==1.1.2
 gunicorn==25.1.0
 pdfminer.six==20250506
 pdfplumber==0.11.7
+PyMuPDF==1.26.3
 pypdf==6.0.0
 groq
 nltk==3.9.1
