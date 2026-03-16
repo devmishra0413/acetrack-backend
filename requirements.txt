@@ -55,7 +55,7 @@ pyparsing==3.2.3
 pypdf==6.0.0
 PyPDF2==3.0.1
 pypdfium2==4.30.0
-pypiwin32==223
+
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
 pytz==2025.2
@@ -76,5 +76,3 @@ typing_extensions==4.15.0
 tzdata==2025.2
 uv==0.9.4
 wcwidth==0.2.13
-win10toast==0.9
-win10toast-click==0.1.2
