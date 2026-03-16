@@ -17,6 +17,7 @@ distro==1.9.0
 Django==5.2.11
 django-cors-headers==4.9.0
 djangorestframework==3.16.1
+djangorestframework_simplejwt==5.5.1
 dotenv==0.9.9
 executing==2.2.1
 fonttools==4.59.1
@@ -48,18 +49,20 @@ psutil==7.0.0
 pure_eval==0.2.3
 pycparser==2.22
 pydantic==1.10.13
+pydantic_core==2.33.2
 Pygments==2.19.2
+PyJWT==2.12.1
 PyMuPDF==1.26.3
 PyMySQL==1.1.2
 pyparsing==3.2.3
 pypdf==6.0.0
 PyPDF2==3.0.1
 pypdfium2==4.30.0
-
+pypiwin32==223
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
 pytz==2025.2
-
+pywin32==311
 pyzmq==27.0.2
 regex==2025.7.34
 schedule==1.2.2
@@ -76,3 +79,5 @@ typing_extensions==4.15.0
 tzdata==2025.2
 uv==0.9.4
 wcwidth==0.2.13
+win10toast==0.9
+win10toast-click==0.1.2
