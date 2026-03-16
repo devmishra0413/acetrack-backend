@@ -2,6 +2,7 @@ Django==5.2.11
 django-cors-headers==4.9.0
 djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
+django-ratelimit==4.1.0
 python-dotenv==1.2.2
 PyMySQL==1.1.2
 gunicorn==25.1.0
