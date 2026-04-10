@@ -12,3 +12,4 @@ PyMuPDF==1.26.3
 pypdf==6.0.0
 groq
 nltk==3.9.1
+psycopg2-binary==2.9.9
