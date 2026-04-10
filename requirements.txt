@@ -12,3 +12,4 @@ pypdf==6.0.0
 groq
 nltk==3.9.1
 psycopg[binary]==3.3.3
+dj-database-url==2.3.0
