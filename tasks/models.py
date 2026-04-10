@@ -7,6 +7,8 @@ class Task(models.Model):
     is_completed = models.BooleanField(default=False)
     date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
+    start_time = models.DateTimeField(blank=True, null=True)
+    end_time   = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.title}"

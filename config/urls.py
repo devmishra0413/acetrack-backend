@@ -15,4 +15,5 @@ urlpatterns = [
     path('api/expenses/', include('expenses.urls')),
     path('api/dashboard/', include('dashboard.urls')), 
     path('api/agent/', include('agent.urls')),
+    path('api/', include('focus.urls')),
 ]
