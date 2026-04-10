@@ -4,7 +4,6 @@ djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
 django-ratelimit==4.1.0
 python-dotenv==1.2.2
-PyMySQL==1.1.2
 gunicorn==25.1.0
 pdfminer.six==20250506
 pdfplumber==0.11.7
