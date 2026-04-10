@@ -13,7 +13,6 @@ from pathlib import Path
 from datetime import timedelta   
 from pathlib import Path
 import os
-pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
