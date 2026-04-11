@@ -16,4 +16,5 @@ urlpatterns = [
     path('api/dashboard/', include('dashboard.urls')), 
     path('api/agent/', include('agent.urls')),
     path('api/', include('focus.urls')),
+    path('api/', include('leaderboard.urls')),
 ]
