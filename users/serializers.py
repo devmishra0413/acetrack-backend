@@ -45,8 +45,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
         try:
             from focus.models import FocusSession
             from django.db.models import Sum
-            result = FocusSession.objects.filter(user=obj).aggregate(total=Sum('duration_seconds'))
-            return result['total'] or 0
+            # duration_minutes ko seconds mein convert karo
+            result = FocusSession.objects.filter(user=obj).aggregate(
+                total=Sum('duration_minutes')
+            )
+            total_minutes = result['total'] or 0
+            return total_minutes * 60  # seconds mein return karo frontend ke liye
         except Exception:
             return 0
 
@@ -79,7 +83,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         if total_tasks >= 50:
             unlocked.append('tasks_50')
 
-        # ⏱️ 10 Hours Focused
+        # ⏱️ 10 Hours Focused (36000 seconds = 600 minutes)
         if focus_seconds >= 36000:
             unlocked.append('focus_10h')
 
