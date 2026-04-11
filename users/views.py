@@ -4,8 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import RegisterSerializer, UserProfileSerializer
 
+
 class RegisterView(APIView):
-    permission_classes = [AllowAny]   # register ke liye login zaroori nahi
+    permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
