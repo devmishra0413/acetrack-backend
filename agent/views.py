@@ -24,7 +24,7 @@ ALLOWED_EXTENSIONS = (".pdf", ".txt")
 
 class AdvisorSerializer(serializers.Serializer):
     message = serializers.CharField(min_length=1, max_length=5_000)
-    history = serializers.ListField(
+    conversation_history = serializers.ListField(
         child=serializers.DictField(),
         required=False,
         default=list,
@@ -124,7 +124,7 @@ class AdvisorView(APIView):
             reply = get_advice(
                 user=request.user,
                 user_message=data["message"],
-                conversation_history=data["history"],
+                conversation_history=data["conversation_history"],
             )
             return Response({"reply": reply})
         except Exception:
