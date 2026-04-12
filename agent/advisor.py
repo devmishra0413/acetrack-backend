@@ -4,11 +4,12 @@ from django.db.models import Sum
 from tasks.models import Task
 from expenses.models import Expense
 import os
+import re
 
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 # ---------------------------------------------------------------------------
-# Keywords jab user actually advice maang raha ho
+# Keywords when user actually wants advice
 # ---------------------------------------------------------------------------
 ADVICE_TRIGGERS = [
     # English
@@ -22,9 +23,14 @@ ADVICE_TRIGGERS = [
     "improve karna", "kaise improve", "kya problem", "kya issue",
 ]
 
+# Word-boundary match to avoid false triggers (e.g. "better" inside "butterfly")
 def _wants_advice(message: str) -> bool:
     lowered = message.lower()
-    return any(trigger in lowered for trigger in ADVICE_TRIGGERS)
+    for trigger in ADVICE_TRIGGERS:
+        pattern = r'(?<!\w)' + re.escape(trigger) + r'(?!\w)'
+        if re.search(pattern, lowered):
+            return True
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -111,6 +117,14 @@ Guidance:
 # ---------------------------------------------------------------------------
 # Main function
 # ---------------------------------------------------------------------------
+# conversation_history: today's chat loaded from AsyncStorage on the frontend
+# It should be a list of { "role": "user"/"assistant", "content": "..." } dicts
+# Frontend flow:
+#   1. App start  → initChatHistory()               (clears if new day)
+#   2. Open chat  → getChatHistory()                (pass as conversation_history)
+#   3. User sends → appendChatMessage('user', msg)
+#   4. Got reply  → appendChatMessage('assistant', reply)
+
 def get_advice(user, user_message: str, conversation_history: list) -> str:
     advice_mode = _wants_advice(user_message)
 
@@ -120,17 +134,25 @@ def get_advice(user, user_message: str, conversation_history: list) -> str:
     else:
         system_prompt = _COMPANION_SYSTEM_PROMPT
 
+    # Filter history to only valid roles (guard against corrupted storage data)
+    valid_history = [
+        msg for msg in conversation_history
+        if isinstance(msg, dict)
+        and msg.get("role") in ("user", "assistant")
+        and isinstance(msg.get("content"), str)
+    ]
+
     messages = [
         {"role": "system", "content": system_prompt},
-        *conversation_history,
+        *valid_history,
         {"role": "user", "content": user_message},
     ]
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=messages,
-        max_tokens=500,        # companion mode mein chhota reply natural lagta hai
-        temperature=0.85,      # thoda zyada creative — real conversation feel
+        max_tokens=300 if not advice_mode else 500,
+        temperature=0.85,
     )
 
     return response.choices[0].message.content
