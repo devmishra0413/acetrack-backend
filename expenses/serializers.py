@@ -4,5 +4,5 @@ from .models import Expense
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
-        fields = ['id', 'label', 'amount', 'date', 'created_at']
+        fields = ['id', 'label', 'amount', 'category', 'date', 'created_at']
         read_only_fields = ['id', 'created_at']
