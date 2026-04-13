@@ -4,6 +4,5 @@ from .models import FocusSession
 class FocusSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FocusSession
-        fields = ['id', 'task', 'duration_minutes', 'focus_type',
-                  'started_at', 'ended_at', 'created_at']
+        fields = ['id', 'task', 'duration_seconds', 'date', 'created_at']
         read_only_fields = ['id', 'created_at']
