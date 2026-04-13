@@ -45,12 +45,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
         try:
             from focus.models import FocusSession
             from django.db.models import Sum
-            # duration_minutes ko seconds mein convert karo
             result = FocusSession.objects.filter(user=obj).aggregate(
-                total=Sum('duration_minutes')
+                total=Sum('duration_seconds')  # ✅ duration_minutes → duration_seconds
             )
-            total_minutes = result['total'] or 0
-            return total_minutes * 60  # seconds mein return karo frontend ke liye
+            return result['total'] or 0  # ✅ already seconds mein hai, convert nahi karna
         except Exception:
             return 0
 
