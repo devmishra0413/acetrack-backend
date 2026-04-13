@@ -36,13 +36,20 @@ def compute_weekly_score(user, week_start, week_end):
 class FocusSessionView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        today = timezone.localdate()
+        result = FocusSession.objects.filter(
+            user=request.user,
+            date=today
+        ).aggregate(total=Sum('duration_seconds'))
+        return Response({'total_seconds': result['total'] or 0})
+
     def post(self, request):
         serializer = FocusSessionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class LeaderboardView(APIView):
     permission_classes = [IsAuthenticated]
