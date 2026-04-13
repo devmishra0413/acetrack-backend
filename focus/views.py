@@ -45,12 +45,20 @@ class FocusSessionView(APIView):
         return Response({'total_seconds': result['total'] or 0})
 
     def post(self, request):
-        serializer = FocusSessionSerializer(data=request.data)
+        data = request.data.copy()
+        serializer = FocusSessionSerializer(data=data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            task_id = serializer.validated_data.pop('task_id', None)
+            task = None
+            if task_id:
+                try:
+                    from tasks.models import Task
+                    task = Task.objects.get(id=task_id, user=request.user)
+                except Task.DoesNotExist:
+                    pass
+            serializer.save(user=request.user, task=task)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class LeaderboardView(APIView):
     permission_classes = [IsAuthenticated]
 
